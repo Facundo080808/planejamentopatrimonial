@@ -54,12 +54,11 @@ export default function HighlightForm() {
 
     if (result.success) {
       setSubmitted(true);
-      alert("Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.");
-      console.log(result.data);
+      // alert("Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.");
+      // console.log(result.data);
       
     } else {
       alert("Erro ao enviar formulário. Tente novamente.");
-      console.error(result.error);
     }
     } catch (error) {
       console.error("Erro ao enviar:", error);
