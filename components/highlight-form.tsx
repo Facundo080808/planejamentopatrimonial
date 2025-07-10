@@ -1,8 +1,7 @@
-"use client"
-
+'use client'
 import type React from "react"
 import { useState } from "react"
-import { motion } from "framer-motion"
+import { motion, spring } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -44,16 +43,29 @@ export default function HighlightForm() {
 
     setIsSubmitting(true)
 
-    // Simulação de envio
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      setSubmitted(true)
-    } catch (error) {
-      console.error("Erro ao enviar formulário:", error)
-      alert("Erro ao enviar formulário. Tente novamente.")
-    } finally {
-      setIsSubmitting(false)
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+    const result = await res.json();
+
+    if (result.success) {
+      setSubmitted(true);
+      alert("Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.");
+      console.log(result.data);
+      
+    } else {
+      alert("Erro ao enviar formulário. Tente novamente.");
+      console.error(result.error);
     }
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      alert("Erro de rede ao enviar formulário.");
+    }
+
   }
 
   const formVariants = {
@@ -82,7 +94,7 @@ export default function HighlightForm() {
       scale: 1,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: spring,
         stiffness: 200,
         damping: 15,
       },
