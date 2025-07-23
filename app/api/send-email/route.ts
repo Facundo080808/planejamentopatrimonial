@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   try {
     const data = await resend.emails.send({
       from: 'contact@fhilaw.com',
-      to: email, 
+      to: "contact@fhilaw.com", 
       subject: `Nova solicitação de consultoria: ${name}`,
       html: `
         <h3>Nova mensagem recebida via formulário</h3>
